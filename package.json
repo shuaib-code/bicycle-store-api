@@ -1,0 +1,48 @@
+{
+  "name": "mongoose",
+  "version": "1.0.0",
+  "description": "A Node.js server for managing a bicycle store, offering RESTful APIs for inventory management, customer orders, and store operations to support an efficient e-commerce system.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist/server.js",
+    "build": "tsc",
+    "start:prod": "node dist/server.js",
+    "start:dev": "tsnd --respawn src/server.ts",
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "eslint src/**/*.ts --fix",
+    "format": "prettier --ignore-path .gitignore --write \"./src/**/*.+(js|ts|json)\"",
+    "format:fix": "prettier --write src"
+  },
+  "prettier": {
+    "useTabs": true
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "eslint": "9.14.0",
+    "express": "^4.21.1",
+    "mongoose": "^8.8.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.15.0",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.9.0",
+    "@typescript-eslint/eslint-plugin": "^8.14.0",
+    "@typescript-eslint/parser": "^8.14.0",
+    "concurrently": "^9.1.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "globals": "^15.12.0",
+    "prettier": "^3.3.3",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.14.0"
+  }
+}
