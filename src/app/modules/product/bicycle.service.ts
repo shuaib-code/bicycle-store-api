@@ -6,8 +6,8 @@ const createBicycleIntoDB = async (bicycle: Bicycle) => {
 	return result;
 };
 
-const getAllBicyclesFromDB = async () => {
-	const result = await BicycleModel.find();
+const getAllBicyclesFromDB = async (query: object) => {
+	const result = await BicycleModel.find(query);
 	return result;
 };
 

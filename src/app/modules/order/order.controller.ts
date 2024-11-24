@@ -1,39 +1,39 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import BicycleModel from "../product/bicycle.model";
 import { OrderValidationZodSchema } from "./order.interface";
 import { OrderServices } from "./order.service";
 
-const createOrder = async (req: Request, res: Response) => {
+const createOrder = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const orderData = req.body;
 		const validatedData = OrderValidationZodSchema.parse(orderData);
 
-		// const { product, quantity, totalPrice } = validatedData;
 		const { product, quantity, totalPrice } = validatedData;
 
+		// Check if the bicycle exists
 		if (!(await BicycleModel.isExist(product))) {
 			throw new Error("This bicycle does not exist.");
 		}
+
+		// Check if the bicycle is in stock
 		if (!(await BicycleModel.inStock(product))) {
-			throw new Error("This bicycle is stock out.");
+			throw new Error("This bicycle is out of stock.");
 		}
+
+		// Check if the requested quantity is available
 		if ((await BicycleModel.getQuantity(product)) < quantity) {
 			throw new Error("The bicycle is in low stock.");
 		}
-		if (!((await BicycleModel.getPrice(product)) * quantity === totalPrice)) {
-			throw new Error("The price calculation is worng.");
-		}
-		try {
-			await BicycleModel.reduceQuantity(product, quantity);
-		} catch (error) {
-			// console.log(error);
-			res.status(200).json({
-				success: false,
-				message: "Something went worng",
-				error,
-			});
+
+		// Validate the total price calculation
+		if ((await BicycleModel.getPrice(product)) * quantity !== totalPrice) {
+			throw new Error("The price calculation is incorrect.");
 		}
 
+		// Reduce the stock quantity
+		await BicycleModel.reduceQuantity(product, quantity);
+
+		// Create the order
 		const result = await OrderServices.createOrderIntoDB(validatedData);
 
 		res.status(200).json({
@@ -41,18 +41,14 @@ const createOrder = async (req: Request, res: Response) => {
 			message: "Order is created successfully",
 			data: result,
 		});
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	} catch (error: any) {
-		res.status(400).json({
-			success: false,
-			message: error.message || "Something went wrong with Order creation.",
-			error,
-		});
+	} catch (error) {
+		next(error);
 	}
 };
 
-const getRevenue = async (req: Request, res: Response) => {
+const getRevenue = async (req: Request, res: Response, next: NextFunction) => {
 	try {
+		// Calculate revenue
 		const result = await OrderServices.calculateRevenue();
 
 		res.status(200).json({
@@ -60,14 +56,8 @@ const getRevenue = async (req: Request, res: Response) => {
 			message: "Revenue calculated successfully",
 			data: { totalRevenue: result },
 		});
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	} catch (error: any) {
-		res.status(400).json({
-			success: false,
-			message:
-				error.message || "Something went wrong with Revenue calculation.",
-			error,
-		});
+	} catch (error) {
+		next(error);
 	}
 };
 

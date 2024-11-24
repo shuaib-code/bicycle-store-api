@@ -34,6 +34,7 @@ const bicycleSchema = new Schema<Bicycle>(
 	},
 	{
 		timestamps: true,
+		versionKey: false,
 	},
 );
 
@@ -52,8 +53,6 @@ bicycleSchema.statics.isExist = async function (_id: string): Promise<boolean> {
 	return !!bicycle;
 };
 
-// Static method to get all bicycles in stock
-// Static method to check if a bicycle with the given _id is in stock
 bicycleSchema.statics.inStock = async function (_id: string): Promise<boolean> {
 	const bicycle = await this.findOne({
 		_id,
@@ -63,7 +62,6 @@ bicycleSchema.statics.inStock = async function (_id: string): Promise<boolean> {
 	return !!bicycle; // Returns true if the bicycle exists and is in stock, otherwise false
 };
 
-// Static method to get the quantity of a specific bicycle
 bicycleSchema.statics.getQuantity = async function (
 	productId: string,
 ): Promise<number> {
@@ -73,6 +71,7 @@ bicycleSchema.statics.getQuantity = async function (
 	});
 	return bicycle ? bicycle.quantity : 0;
 };
+
 bicycleSchema.statics.getPrice = async function (
 	productId: string,
 ): Promise<number> {
@@ -82,7 +81,7 @@ bicycleSchema.statics.getPrice = async function (
 	});
 	return bicycle.price;
 };
-// Static method to mark a bicycle as out of stock
+
 bicycleSchema.statics.markOutOfStock = async function (
 	_id: string,
 ): Promise<boolean> {

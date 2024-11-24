@@ -2,24 +2,30 @@ import mongoose, { model, Schema } from "mongoose";
 import BicycleModel from "../product/bicycle.model";
 import { Order } from "./order.interface";
 
-const orderSchema = new Schema({
-	// eslint-disable-next-line no-useless-escape
-	email: { type: String, required: true, match: /.+\@.+\..+/ },
-	product: {
-		type: mongoose.Types.ObjectId,
-		ref: "Bicycle",
-		required: true,
-		validate: {
-			validator: async (value: mongoose.Types.ObjectId) => {
-				const bicycleExists = await BicycleModel.exists({ _id: value });
-				return bicycleExists !== null;
+const orderSchema = new Schema(
+	{
+		// eslint-disable-next-line no-useless-escape
+		email: { type: String, required: true, match: /.+\@.+\..+/ },
+		product: {
+			type: mongoose.Types.ObjectId,
+			ref: "Bicycle",
+			required: true,
+			validate: {
+				validator: async (value: mongoose.Types.ObjectId) => {
+					const bicycleExists = await BicycleModel.exists({ _id: value });
+					return bicycleExists !== null;
+				},
+				message: "The referenced Bicycle product does not exist.",
 			},
-			message: "The referenced Bicycle product does not exist.",
 		},
+		quantity: { type: Number, required: true, min: 1 },
+		totalPrice: { type: Number, required: true, min: 0 },
 	},
-	quantity: { type: Number, required: true, min: 1 },
-	totalPrice: { type: Number, required: true, min: 0 },
-});
+	{
+		timestamps: true,
+		versionKey: false,
+	},
+);
 
 orderSchema.post("save", async function () {
 	const { product } = this;

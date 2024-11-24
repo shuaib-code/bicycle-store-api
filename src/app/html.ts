@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+export const homepaga: string = `
+    <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -195,3 +196,4 @@
 </body>
 
 </html>
+`;
