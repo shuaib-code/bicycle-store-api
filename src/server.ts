@@ -1,17 +1,42 @@
+/* eslint-disable no-console */
+import "module-alias/register";
+
+import { env } from "@env";
+import { Server } from "http";
 import mongoose from "mongoose";
 import app from "./app";
-import config from "./app/config";
+let server: Server;
 
-async function main() {
-	try {
-		await mongoose.connect(config.database_url as string);
-
-		app.listen(config.port, () => {
-			console.log(`Bicycle Store listening on port:${config.port}`);
+const shutdown = (message: string, error?: unknown) => {
+	console.error(message, error ?? "");
+	if (server) {
+		server.close(() => {
+			console.log("🔒 Server closed");
+			process.exit(1);
 		});
-	} catch (error) {
-		console.log(error);
+	} else {
+		process.exit(1);
 	}
-}
+};
+
+process.on("unhandledRejection", (reason) =>
+	shutdown("😈 Unhandled Rejection:", reason),
+);
+process.on("uncaughtException", (error) =>
+	shutdown("😈 Uncaught Exception:", error),
+);
+
+// Initialize application
+const main = async () => {
+	try {
+		await mongoose.connect(env.DATABASE_URL as string);
+		console.log("✅ Database connected");
+		server = app.listen(env.PORT, () =>
+			console.log(`🚀 Bicycle Store Server listening on port:${env.PORT}`),
+		);
+	} catch (error) {
+		shutdown("❌ Failed to initialize application:", error);
+	}
+};
 
 main();

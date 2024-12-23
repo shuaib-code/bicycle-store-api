@@ -3,12 +3,21 @@
   "version": "1.0.0",
   "description": "A Node.js server for managing a bicycle store, offering RESTful APIs for inventory management, customer orders, and store operations to support an efficient e-commerce system.",
   "main": "index.js",
+  "_moduleAliases": {
+    "@env": "dist/app/config/index.js",
+    "@controllers": "dist/app/controller/index.js",
+    "@models": "dist/app/model/index.js",
+    "@services": "dist/app/service/index.js",
+    "@middlewares": "dist/app/middleware/index.js",
+    "@interface": "dist/app/interface/index.js",
+    "@routes": "dist/app/routes/index.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./dist/server.js",
     "build": "tsc",
     "start:prod": "node dist/server.js",
-    "start:dev": "tsnd --respawn src/server.ts",
+    "start:dev": "ts-node-dev --require tsconfig-paths/register src/server.ts",
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint src/**/*.ts --fix",
     "format": "prettier --ignore-path .gitignore --write \"./src/**/*.+(js|ts|json)\"",
@@ -25,6 +34,7 @@
     "dotenv": "^16.4.5",
     "eslint": "9.14.0",
     "express": "^4.21.1",
+    "module-alias": "^2.2.3",
     "mongoose": "^8.8.1",
     "zod": "^3.23.8"
   },
@@ -42,6 +52,7 @@
     "prettier": "^3.3.3",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.6.3",
     "typescript-eslint": "^8.14.0"
   }

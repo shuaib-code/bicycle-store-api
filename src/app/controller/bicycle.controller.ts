@@ -1,7 +1,7 @@
+import { bicycleZodSchema } from "@interface";
+import { BicycleModel } from "@models";
+import { BicycleServices } from "@services";
 import { NextFunction, Request, Response } from "express";
-import { bicycleZodSchema } from "./bicycle.interface";
-import BicycleModel from "./bicycle.model";
-import { BicycleServices } from "./bicycle.service";
 
 const createBicycle = async (
 	req: Request,

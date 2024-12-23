@@ -1,18 +1,13 @@
+/* eslint-disable no-unused-vars */
+import { Bicycle } from "@interface";
 import mongoose, { Model, model, Schema } from "mongoose";
-import { Bicycle } from "./bicycle.interface";
 
 interface TBicycleMethod extends Model<Bicycle> {
-	// eslint-disable-next-line no-unused-vars
 	isExist(productId: string): Promise<boolean>;
-	// eslint-disable-next-line no-unused-vars
 	inStock(productId: string): Promise<boolean>;
-	// eslint-disable-next-line no-unused-vars
 	getQuantity(productId: string): Promise<number>;
-	// eslint-disable-next-line no-unused-vars
 	getPrice(productId: string): Promise<number>;
-	// eslint-disable-next-line no-unused-vars
 	reduceQuantity(productId: string, amount: number): Promise<boolean>;
-	// eslint-disable-next-line no-unused-vars
 	markOutOfStock(productId: string): Promise<boolean>;
 }
 
@@ -112,6 +107,7 @@ bicycleSchema.statics.reduceQuantity = async function (
 	return true;
 };
 
-const BicycleModel = model<Bicycle, TBicycleMethod>("Bicycle", bicycleSchema);
-
-export default BicycleModel;
+export const BicycleModel = model<Bicycle, TBicycleMethod>(
+	"Bicycle",
+	bicycleSchema,
+);

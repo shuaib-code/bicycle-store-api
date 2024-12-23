@@ -1,6 +1,6 @@
+import { Order } from "@interface";
 import mongoose, { model, Schema } from "mongoose";
-import BicycleModel from "../product/bicycle.model";
-import { Order } from "./order.interface";
+import { BicycleModel } from "./bicycle.model";
 
 const orderSchema = new Schema(
 	{
@@ -42,6 +42,4 @@ orderSchema.post("save", async function () {
 	}
 });
 
-const OrderModel = model<Order>("Order", orderSchema);
-
-export default OrderModel;
+export const OrderModel = model<Order>("Order", orderSchema);

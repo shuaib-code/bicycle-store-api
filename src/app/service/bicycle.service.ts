@@ -1,5 +1,5 @@
-import { Bicycle } from "./bicycle.interface";
-import BicycleModel from "./bicycle.model";
+import { Bicycle } from "@interface";
+import { BicycleModel } from "@models";
 
 const createBicycleIntoDB = async (bicycle: Bicycle) => {
 	const result = await BicycleModel.create(bicycle);

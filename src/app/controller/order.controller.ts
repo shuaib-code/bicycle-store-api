@@ -1,7 +1,7 @@
+import { OrderValidationZodSchema } from "@interface";
+import { BicycleModel } from "@models";
+import { OrderServices } from "@services";
 import { NextFunction, Request, Response } from "express";
-import BicycleModel from "../product/bicycle.model";
-import { OrderValidationZodSchema } from "./order.interface";
-import { OrderServices } from "./order.service";
 
 const createOrder = async (req: Request, res: Response, next: NextFunction) => {
 	try {
