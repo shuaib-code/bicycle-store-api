@@ -1,6 +1,4 @@
 /* eslint-disable no-console */
-import "module-alias/register";
-
 import { env } from "@env";
 import { Server } from "http";
 import mongoose from "mongoose";
@@ -38,5 +36,7 @@ const main = async () => {
 		shutdown("❌ Failed to initialize application:", error);
 	}
 };
+
+export default app;
 
 main();
