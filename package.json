@@ -1,20 +1,20 @@
 {
-  "name": "mongoose",
+  "name": "bicycle-store-server",
   "version": "1.0.0",
   "description": "A Node.js server for managing a bicycle store, offering RESTful APIs for inventory management, customer orders, and store operations to support an efficient e-commerce system.",
-  "main": "index.js",
+  "main": "server.js",
   "_moduleAliases": {
-    "@env": "dist/app/config/index.js",
-    "@controllers": "dist/app/controller/index.js",
-    "@models": "dist/app/model/index.js",
-    "@services": "dist/app/service/index.js",
-    "@middlewares": "dist/app/middleware/index.js",
-    "@interface": "dist/app/interface/index.js",
-    "@routes": "dist/app/routes/index.js"
+    "@env": "dist/src/app/config/index.js",
+    "@controllers": "dist/src/app/controller/index.js",
+    "@models": "dist/src/app/model/index.js",
+    "@services": "dist/src/app/service/index.js",
+    "@middlewares": "dist/src/app/middleware/index.js",
+    "@interface": "dist/src/app/interface/index.js",
+    "@routes": "dist/src/app/routes/index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./dist/server.js",
+    "start": "ts-node -r tsconfig-paths/register src/server.ts",
     "build": "tsc",
     "start:prod": "node dist/server.js",
     "start:dev": "ts-node-dev --require tsconfig-paths/register src/server.ts",
@@ -36,6 +36,7 @@
     "express": "^4.21.1",
     "module-alias": "^2.2.3",
     "mongoose": "^8.8.1",
+    "tsconfig-paths": "^4.2.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
@@ -52,7 +53,6 @@
     "prettier": "^3.3.3",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
-    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.6.3",
     "typescript-eslint": "^8.14.0"
   }
